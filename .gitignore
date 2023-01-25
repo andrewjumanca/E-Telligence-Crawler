@@ -1,0 +1,5 @@
+# Ignore node modules in crawlee_web_crawler
+crawlee_web_crawler/node_modules
+
+# Ignore storage folder in crawlee_web_crawler
+crawlee_web_crawler/storage

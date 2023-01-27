@@ -13,8 +13,10 @@ class googleShopingCrawler(scrapy.Spider):
     ]
 
     def parse(self, response):
-        for product in response.css("div.KZmu8e"):
+        for product in response.css("div.sh-dgr__gr-auto.sh-dgr__grid-result"):
             yield {
-                'product': product.css("h3.sh-np__product-title::text").extract_first(),
-                'brand': product.css("span.E5ocAb::text").extract_first(),
+                'product_name': product.css("h3.tAxDx::text").extract_first(),
+                'brand': product.css("div.aULzUe.IuHnof::text").extract_first(),
+                'price': product.css("span.a8Pemb.OFFNJ::text").extract_first(),
+                'URL': product.css("a.Lq5OHe.eaGTj.translate-content::attr(href)").extract_first()
             }

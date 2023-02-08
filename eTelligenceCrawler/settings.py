@@ -9,6 +9,7 @@
 
 BOT_NAME = 'eTelligenceCrawler'
 
+
 SPIDER_MODULES = ['eTelligenceCrawler.spiders']
 NEWSPIDER_MODULE = 'eTelligenceCrawler.spiders'
 
@@ -18,6 +19,11 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False    
+
+#FEED_URI = 'OUTPUT.json'
+FEED_FORMAT = 'json'
+FEED_EXPORT_ENCODING = 'utf-8'
+
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

@@ -5,7 +5,7 @@ import logger from 'morgan';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-import indexRouter from './routes/index.js';
+import apiv1Router from './routes/api/v1/apiv1.js';
 import usersRouter from './routes/users.js';
 import models from './models.js';
 
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   req.models = models;
   next();
 });
-app.use('/', indexRouter);
+app.use('/api/v1', apiv1Router);
 app.use('/users', usersRouter);
 
 export default app;

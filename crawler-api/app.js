@@ -22,8 +22,4 @@ app.use(express.static(join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.listen(3000, () => {
-  console.log('http://localhost:3000');
-});
-
 export default app;

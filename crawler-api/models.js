@@ -1,4 +1,4 @@
-import mongoose, { model, mongo } from "mongoose";
+import mongoose from "mongoose";
 
 let models = {}
 const uri = 'mongodb+srv://chrisjk868:9usirHc0@crawler.0jer4eh.mongodb.net/?retryWrites=true&w=majority';

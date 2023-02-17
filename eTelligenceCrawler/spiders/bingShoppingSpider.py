@@ -3,7 +3,7 @@ import scrapy
 class bingShoppingSpider(scrapy.Spider):
     name = "bingShoppingSpider"
     start_urls = [
-        'https://www.bing.com/shop?q=banana+pants&FORM=SHOPTB'
+        'https://www.bing.com/shop?q=mechanical+pencil&FORM=SHOPTB'
     ]
 
     def parse(self, response):
@@ -15,7 +15,6 @@ class bingShoppingSpider(scrapy.Spider):
             )
 
             yield {
-                'page': pageNum,
                 'product_name': product_name,
                 'seller': product.css("div.br-seller::text").extract_first(),
                 'price': product.css("div.pd-price.br-standardPrice.promoted::text").extract_first(),

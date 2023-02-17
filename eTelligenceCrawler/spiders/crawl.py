@@ -1,4 +1,5 @@
 from googleShoppingSpider import googleShoppingSpider
+from bingShoppingSpider import bingShoppingSpider
 from scrapy.linkextractors import LinkExtractor
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
@@ -25,5 +26,11 @@ if __name__ == "__main__":
     'START_URLS': urls['google']
     
     })
-
+  
+  process.crawl(bingShoppingSpider, custom_settings={
+    'FEED_URI': 'bingResults.json',
+    'FEED_FORMAT': 'json',
+    'START_URLS': urls['bing']
+    
+    })
   process.start()

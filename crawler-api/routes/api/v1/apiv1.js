@@ -20,8 +20,8 @@ router.post('/send', async (req, res) => {
   try {
     const json = req.body;
     const newProduct = new req.models.Products({
-      product_name: json.query,
-      urls: json.products
+      product_name: json.product_name,
+      urls: json.urls
     })
     await newProduct.save();
     res.json({"status": "success"});

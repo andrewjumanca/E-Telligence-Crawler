@@ -14,8 +14,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use(logger('dev'));
-app.use(json());
-app.use(urlencoded({ extended: false }));
+app.use(json({ limit: '10mb' }));
+app.use(urlencoded({limit: '10mb', extended: true }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, 'public')));
 

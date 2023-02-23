@@ -15,6 +15,7 @@ class googleShoppingSpider(scrapy.Spider):
 
     def start_requests(self):
         url = f'https://www.google.com/search?q={self.search_query}&source=lnms&tbm=shop'
+        # url = f'https://www.google.com/search?q={self.search_query}'
         yield scrapy.Request(url=url, callback=self.parse)
     
 
@@ -22,15 +23,18 @@ class googleShoppingSpider(scrapy.Spider):
         product_data = {'product_name': self.search_query,
                     'urls': []}
 
-        queryRegex = convert_string_to_regex(self.search_query)
+        queryRegex = 'url?url='
         print(queryRegex)
         
-        link_extractor = LinkExtractor(allow=(rf'{queryRegex}',))
+        link_extractor = LinkExtractor(allow=(r'url\?url=',))
+        # allow=(rf'{queryRegex}',)
 
         # r'.*Jordan\+Essential\+Winter\+Mens\+Fleece\+Hoodie.*'
 
         for link in link_extractor.extract_links(response):
-            product_data['urls'].append(link.url)
+            
+            if not check_word_repetition(link.url, "google"):
+                product_data['urls'].append(link.url)
        
         try:
             response = requests.post('http://localhost:3000/api/v1/send', json=product_data)
@@ -47,4 +51,14 @@ def convert_string_to_regex(string):
     string = re.sub(r'\+', r'\+', string)
     # Wrap the modified string in the regex syntax
     return rf'.*{string}.*'
+
+def check_word_repetition(url_string, word):
+    # Convert the URL string to lowercase to make the search case-insensitive
+    url_string = url_string.lower()
+    
+    # Count the occurrences of the word in the URL string
+    word_count = url_string.count(word.lower())
+    
+    # Return True if the word appears more than once in the URL string, False otherwise
+    return word_count > 1
     

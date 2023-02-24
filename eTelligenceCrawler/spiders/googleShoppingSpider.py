@@ -5,6 +5,7 @@ import re
 from scrapy.linkextractors import LinkExtractor
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
+from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 
 class googleShoppingSpider(scrapy.Spider):
     name = "googleShoppingSpider"
@@ -13,30 +14,32 @@ class googleShoppingSpider(scrapy.Spider):
         super().__init__(**kwargs)
         self.search_query = search_query
 
+    # def __init__(self, search_term='', **kwargs):
+    #     super().__init__(**kwargs)
+    #     self.search_query = search_term
+
     def start_requests(self):
         url = f'https://www.google.com/search?q={self.search_query}&source=lnms&tbm=shop'
         # url = f'https://www.google.com/search?q={self.search_query}'
+        # url = f'https://etelligenceapi.live/search?q={self.search_query}'
         yield scrapy.Request(url=url, callback=self.parse)
     
 
     def parse(self, response):
         product_data = {'product_name': self.search_query,
                     'urls': []}
-
-        queryRegex = 'url?url='
-        print(queryRegex)
         
-        link_extractor = LinkExtractor(allow=(r'url\?url=',))
+        link_extractor = LinkExtractor(allow=(r'url\?url=https',), )
         # allow=(rf'{queryRegex}',)
-
-        # r'.*Jordan\+Essential\+Winter\+Mens\+Fleece\+Hoodie.*'
-
+        # allow=(r'url\?url=https',)
+    
         for link in link_extractor.extract_links(response):
-            
-            if not check_word_repetition(link.url, "google"):
+
+            if not check_word_repetition(link.url, "google.com"):
                 product_data['urls'].append(link.url)
-       
+            # product_data['urls'].append(link.url)
         try:
+            print("Array length: ", len(product_data['urls']))
             response = requests.post('http://localhost:3000/api/v1/send', json=product_data)
             if response.status_code == 200:
                     print('Data sent successfully')
@@ -61,4 +64,5 @@ def check_word_repetition(url_string, word):
     
     # Return True if the word appears more than once in the URL string, False otherwise
     return word_count > 1
-    
+
+

@@ -1,6 +1,6 @@
 import express from 'express';
 import fetch from 'node-fetch';
-import { spawn } from 'child_process';
+import spawn from 'await-spawn';
 
 var router = express.Router();
 
@@ -9,13 +9,22 @@ router.get('/', async (req, res) => {
     // run the python script
     const url = 'http://localhost:3000/api/v1/return?productName=';
     const query = req.query.productName;
-    const pythonProcess = spawn('python3', ['hello.py', query]);
-    for await (const data of pythonProcess.stdout) {
-      console.log(`stdout from the pythonProcess: ${data}`);
+    console.log(`Got ${query}`);
+    try {
+      const pythonProcess = await spawn('python', ['eTelligenceCrawler/crawl.py', query]);
+      console.log(pythonProcess.toString());
+    } catch (error) {
+      console.log(error.stderr.toString());
     }
-    // const results = await fetch(url + query).then(resp => resp.json());
-    // console.log(results);
-    // res.json(results);
+    try {
+      console.log('Fetching from database...');
+      const results = await fetch(url + query).then(resp => resp.json());
+      console.log(results);
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ 'status': 'failure', 'error': error});
+      console.log(error);
+    }
   } catch (error) {
     console.log(error); 
     res.status(500).send(error);
@@ -31,8 +40,8 @@ router.post('/send', async (req, res) => {
       urls: json.urls
     })
     await newProduct.save();
-    console.log('saved to database');
-    // res.redirect('/return?productName=' + json.productName);
+    console.log('Saved to database');
+    res.status(500).json({ 'status': 'success' });
   } catch (error) {
     console.log(error); 
     res.status(500).send(error);

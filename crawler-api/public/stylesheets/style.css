@@ -1,8 +1,195 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+:root {  
+  --purple: rgb(123, 31, 162);
+  --violet: rgb(103, 58, 183);
+  --pink: rgb(244, 143, 177);
 }
 
-a {
-  color: #00B7FF;
+@keyframes background-pan {
+  from {
+    background-position: 0% center;
+  }
+  
+  to {
+    background-position: -200% center;
+  }
+}
+
+@keyframes scale {
+  from, to {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+  
+}
+
+@keyframes rotation {
+  from{
+    transform: rotate(0deg);
+  }
+
+  to{
+    transform: rotate(180deg);
+  }
+  
+}
+
+
+.header{
+  padding-bottom: 20px;
+}
+h1 {
+  font-family: "Rubik", sans-serif;
+  font-size: clamp(2em, 2vw, 4em);
+  padding: 10px;
+  bottom: 50px;
+  text-align: center;
+}
+
+h1 > .magic {
+  display: inline-block;
+  position: relative;
+}
+
+h1 > .magic > .magic-star {
+  --size: clamp(20px, 1.5vw, 30px);
+  animation: scale 700ms ease forwards;
+  display: block;
+  height: var(--size);
+  left: var(--star-left);
+  position: absolute;
+  top: var(--star-top);
+  width: var(--size);
+}
+
+h1 > .magic > .magic-star > svg {
+  display: block;
+  opacity: .7;
+  animation: rotate 1000ms linear infinite;
+}
+
+h1 > .magic > .magic-star > svg > path {
+  fill: var(--violet)
+}
+
+
+
+h1 > .magic > .magic-text {
+  animation: background-pan 3s linear infinite;
+  background: linear-gradient(
+    to right,
+    var(--purple),
+    var(--violet),
+    var(--pink),
+    var(--purple)
+  );
+  background-size: 200%;
+  -webkit-background-clip: text;
+  background-clip: text; 
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+/* search box */
+.demo{
+  display: grid;
+  place-items: center;
+
+}
+.input {
+  width: 600px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1.5px solid lightgrey;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
+}
+
+.input:hover {
+  border: 2px solid lightgrey;
+  box-shadow: 0px 0px 20px -17px;
+}
+
+.input:active {
+  transform: scale(0.95);
+}
+
+.input:focus {
+  border: 2px solid grey;
+}
+
+pre > code {
+  white-space: pre-wrap !important;
+}
+
+.json-box{
+  padding-top: 20px;
+}
+
+.send{
+  padding-left: 500px;
+  padding-top: 5px;
+  font-family: "Rubik", sans-serif;
+
+
+}
+.send-button {
+  font-family: "Rubik", sans-serif;
+  font-size: 12px;
+  background: var(--purple);
+  color: white;
+  padding: 0.7em 1em;
+  padding-left: 0.9em;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.send-button span {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
+}
+
+.send-button svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+  font-family: "Rubik", sans-serif;
+
+}
+
+.send-button:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.send-button:hover svg {
+  transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+.send-button:hover span {
+  transform: translateX(5em);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
 }

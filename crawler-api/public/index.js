@@ -22,15 +22,16 @@ for (const star of document.getElementsByClassName("magic-star")) {
 }
 
 // JSON visualizer
-const jsonContainer = document.getElementById('json-container');
-const jsonData = { "name": "John Doe", "age": 30, "city": "New York" };
-jsonContainer.textContent = JSON.stringify(jsonData, null, 2);
-Prism.highlightAll();
+// const jsonContainer = document.getElementById('json-container');
+// const jsonData = { "name": "John Doe", "age": 30, "city": "New York" };
+// jsonContainer.textContent = JSON.stringify(jsonData, null, 2);
+// Prism.highlightAll();
 
 // Event Listener
 const input = document.getElementById("searchQuery");
 const button = document.getElementById("sendQueryButton");
 const responseContainer = document.getElementById("response-container");
+
 
 button.addEventListener('click', async () => {
     const query = input.value
@@ -44,5 +45,6 @@ button.addEventListener('click', async () => {
     const jsonData = JSON.stringify(data, null, 2); // prettify JSON string with indentation
 
     responseContainer.textContent = jsonData
+    Prism.highlightAll();
 })
 

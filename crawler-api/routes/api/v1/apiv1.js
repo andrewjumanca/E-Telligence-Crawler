@@ -12,14 +12,12 @@ router.get('/', async (req, res) => {
     console.log(`Got ${query}`);
     try {
       const pythonProcess = await spawn('python', ['eTelligenceCrawler/crawl.py', query]);
-      console.log(pythonProcess.toString());
     } catch (error) {
       console.log(error.stderr.toString());
     }
     try {
       console.log('Fetching from database...');
       const results = await fetch(url + query).then(resp => resp.json());
-      console.log(results);
       res.json(results);
     } catch (error) {
       res.status(500).json({ 'status': 'failure', 'error': error});
@@ -41,7 +39,7 @@ router.post('/send', async (req, res) => {
     })
     await newProduct.save();
     console.log('Saved to database');
-    res.status(500).json({ 'status': 'success' });
+    res.status(200).json({ 'status': 'success' });
   } catch (error) {
     console.log(error); 
     res.status(500).send(error);

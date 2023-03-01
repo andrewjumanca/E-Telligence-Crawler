@@ -6,7 +6,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 import apiv1Router from './routes/api/v1/apiv1.js';
-import usersRouter from './routes/users.js';
 import models from './models.js';
 
 var app = express();
@@ -25,7 +24,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/v1', apiv1Router);
-app.use('/users', usersRouter);
 
 app.listen(3000, () => {
   console.log('Server running at http://localhost:3000');

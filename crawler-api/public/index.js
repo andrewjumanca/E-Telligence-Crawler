@@ -31,10 +31,15 @@ for (const star of document.getElementsByClassName("magic-star")) {
 const input = document.getElementById("searchQuery");
 const button = document.getElementById("sendQueryButton");
 const responseContainer = document.getElementById("response-container");
+const loader = document.getElementById('loader-container');
+const jsonBox = document.querySelector('.json-box');
 
 
 button.addEventListener('click', async () => {
     const query = input.value
+    jsonBox.style.display ='none'
+    loader.style.display = 'block';
+
 
     // set input to api endpoint
     const response = await fetch('http://localhost:3000/api/v1?productName=' + query, {
@@ -43,8 +48,10 @@ button.addEventListener('click', async () => {
 
     const data = await response.json();
     const jsonData = JSON.stringify(data, null, 2); // prettify JSON string with indentation
+    // Hide the loader and show the json-box
+    loader.style.display = 'none';
+    jsonBox.style.display = 'block';
 
     responseContainer.textContent = jsonData
     Prism.highlightAll();
 })
-

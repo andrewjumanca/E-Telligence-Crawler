@@ -3,7 +3,7 @@ import json
 import subprocess
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from eTelligenceCrawler.spiders.googleShoppingSpider import googleShoppingSpider
+from spiders.googleShoppingSpider import googleShoppingSpider
 
 BASE_PROMPT = """I am an agent that finds real time google shopping data for a specific product sold at different retailers. """
 
@@ -61,7 +61,7 @@ def getProductUrls(query: fixieai.Message) -> str:
     # process = CrawlerProcess(get_project_settings())
     # process.crawl(googleShoppingSpider,  search_query = search_term)
     # process.start()
-    result = subprocess.run(['python', 'eTelligenceCrawler/crawl.py', search_term], capture_output=True, text=True)
+    result = subprocess.run(['python', 'crawl.py', search_term], capture_output=True, text=True)
     output = result.stdout
     print(output)
 

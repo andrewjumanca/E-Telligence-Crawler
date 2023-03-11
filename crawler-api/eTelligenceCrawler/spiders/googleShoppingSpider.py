@@ -6,7 +6,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
-from eTelligenceCrawler.spiders.extractUrlSpider import extractUrlSpider
+from spiders.extractUrlSpider import extractUrlSpider
 
 class googleShoppingSpider(scrapy.Spider):
     name = "googleShoppingSpider"

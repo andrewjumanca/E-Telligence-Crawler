@@ -1,0 +1,8 @@
+handle: google-shopping-search
+name: ''
+description: This is an agent that returns relevant google shopping urls and product
+  information based on a search term
+entry_point: main:shoppingAgent
+more_info_url: https://github.com/andrewjumanca/E-Telligence-Crawler
+deployment_url: null
+public: false

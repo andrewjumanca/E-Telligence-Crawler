@@ -15,6 +15,7 @@ router.get('/', async (req, res) => {
     } catch (error) {
       console.log(error.stderr.toString());
     }
+
     try {
       console.log('Fetching from database...');
       const results = await fetch(url + query).then(resp => resp.json());
@@ -23,6 +24,7 @@ router.get('/', async (req, res) => {
       res.status(500).json({ 'status': 'failure', 'error': error});
       console.log(error);
     }
+    
   } catch (error) {
     console.log(error); 
     res.status(500).send(error);

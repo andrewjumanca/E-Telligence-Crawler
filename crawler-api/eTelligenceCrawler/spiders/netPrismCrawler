@@ -1,0 +1,36 @@
+import os
+from dotenv import load_dotenv
+
+
+    # self.netprism_api_url = 'https://canary.netprism.dev/v1/task'
+    # load_dotenv()
+    # self.api_key = os.getenv('API_KEY')
+    # self.headers = {
+    #     'Authorization': f'Bearer {self.api_key}',
+    #     'Content-Type': 'application/json'
+    # }
+
+
+#     request_body = {
+        #         'url': actual_url,
+        #         'type': 'webpage',
+        #         'options': {
+                    
+        #         }
+        #     }
+        #     print("here")
+        #     response = requests.post(self.netprism_api_url, headers=self.headers, json=request_body)
+        #     response_json = response.json()
+        #     print(response.json)
+        #     # Retrieve the task ID from the response
+        #     task_id = response_json['id']
+
+        #     # Send a GET request to retrieve the task result
+        #     get_result_url = f'{self.netprism_api_url}?id={task_id}'
+        #     result_response = requests.get(get_result_url, headers=self.headers)
+        #     result_json = result_response.json()
+
+        #     # Access the scraped HTML or other data from the result
+        #     scraped_html = result_json['data']
+
+        #     print(scraped_html)

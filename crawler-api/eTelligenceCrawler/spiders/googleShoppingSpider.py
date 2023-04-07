@@ -31,6 +31,7 @@ class googleShoppingSpider(scrapy.Spider):
             if not check_word_repetition(link.url, "google.com"):
                 product_data['urls'].append(link.url)
 
+        print("moving to extract")
         process = CrawlerProcess(get_project_settings())
         process.crawl(extractUrlSpider, product_name = product_data['product_name'], urls = product_data['urls'])
         process.start()

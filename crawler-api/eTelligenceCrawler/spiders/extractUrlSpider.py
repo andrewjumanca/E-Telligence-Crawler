@@ -1,6 +1,9 @@
 import scrapy
 import requests
 from urllib.parse import urlparse, parse_qsl
+from dotenv import load_dotenv
+import os
+import base64
 
 class extractUrlSpider(scrapy.Spider):
     name = "extractUrlSpider"
@@ -23,18 +26,45 @@ class extractUrlSpider(scrapy.Spider):
             self.product_data['urls'].append(actual_url)
 
     def closed(self, reason):
-        # Save self.product_data to a database or file
         try:
-            # print("length of start urls: ", len(self.urls))
-            # print("Array length: ", len(self.product_data['urls']))
-            response = requests.post('http://localhost:3000/api/v1/send', json=self.product_data)
+            response = requests.post('http://localhost:8000/api/v1/send', json=self.product_data)
             if response.status_code == 200:
                     print('Data sent successfully')
         except Exception as e:
-            print(e)
+            print(e)    
 
 def extract_actual_url(google_url):
     parsed_url = urlparse(google_url)
     query_params = dict(parse_qsl(parsed_url.query))
     actual_url = query_params.get('url', '')
     return actual_url
+
+
+# Code to connect to Netprism API
+
+# print('starting netprism connection')
+# netprism_api_url = 'https://canary.netprism.dev/v1/task'
+# load_dotenv()
+# api_key = os.getenv('API_KEY')
+# headers = {
+#     'Authorization': f'Bearer {api_key}',
+#     'Content-Type': 'application/json'
+# }
+# request_body = {
+#     'url': 'https://www.champion.com/closed-bottom-jersey-pants.html?country=US&currency=USD',
+#     'type': 'webpage',
+#     'options': {
+#         'jsRender': True
+#     }
+# }
+# response2 = await requests.post(netprism_api_url, headers=headers, json=request_body)
+# response_json = response2.json()
+# print(response2.json)
+# # Retrieve the task ID from the response
+# data = response_json['data']
+# decoded_html = base64.b64decode(data)
+# print(decoded_html)
+# print('finished netprism connection')
+# with open("output.txt", "w") as f:
+#     # Write some text to the file
+    # f.write(decoded_html.decode('utf-8'))

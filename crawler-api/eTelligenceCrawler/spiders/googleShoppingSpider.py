@@ -37,13 +37,8 @@ class googleShoppingSpider(scrapy.Spider):
 
 
 def check_word_repetition(url_string, word):
-    # Convert the URL string to lowercase to make the search case-insensitive
     url_string = url_string.lower()
-    
-    # Count the occurrences of the word in the URL string
     word_count = url_string.count(word.lower())
-    
-    # Return True if the word appears more than once in the URL string, False otherwise
     return word_count > 1
 
 

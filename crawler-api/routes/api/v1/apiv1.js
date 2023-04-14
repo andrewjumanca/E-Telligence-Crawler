@@ -7,7 +7,7 @@ var router = express.Router();
 router.get('/', async (req, res) => {
   try {
     // run the python script
-    const url = 'http://localhost:3000/api/v1/return?productName=';
+    const url = 'http://localhost:8000/api/v1/return?productName=';
     const query = req.query.productName;
     console.log(`Got ${query}`);
     try {

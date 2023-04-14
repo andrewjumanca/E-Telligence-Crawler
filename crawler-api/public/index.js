@@ -42,7 +42,7 @@ button.addEventListener('click', async () => {
 
 
     // set input to api endpoint
-    const response = await fetch('http://localhost:3000/api/v1?productName=' + query, {
+    const response = await fetch('http://localhost:8000/api/v1?productName=' + query, {
       method: 'GET'
     });
 

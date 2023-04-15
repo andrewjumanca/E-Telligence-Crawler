@@ -27,8 +27,8 @@ app.use((req, res, next) => {
 app.use('/api/v1', apiv1Router);
 app.use('/users', usersRouter);
 
-app.listen(3000, () => {
-  console.log('Server running at http://localhost:3000');
-});
+// app.listen(3000, () => {
+//   console.log('Server running at http://localhost:3000');
+// });
 
 export default app;

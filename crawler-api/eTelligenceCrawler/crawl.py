@@ -1,6 +1,7 @@
 import sys
 import scrapy as scrapy
 from spiders.googleShoppingSpider import googleShoppingSpider
+from spiders.yahooShoppingSpider import yahooShoppingSpider
 from scrapy.linkextractors import LinkExtractor
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
@@ -16,5 +17,6 @@ if __name__ == "__main__":
   
 
   process.crawl(googleShoppingSpider,  search_query = search_term)
+  # process.crawl(yahooShoppingSpider,  search_query = search_term)
 
   process.start()

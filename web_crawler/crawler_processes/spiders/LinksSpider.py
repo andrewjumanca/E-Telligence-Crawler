@@ -1,8 +1,5 @@
-from pathlib import Path
 import scrapy
 from scrapy.linkextractors import LinkExtractor
-import json
-
 
 def check_word_repetition(url_string, word):
     url_string = url_string.lower()
@@ -35,4 +32,5 @@ class LinksSpider(scrapy.Spider):
 
     #     # Add the HTTP URLs to the all_urls list
     #     self.links.extend(http_urls)
+
 

@@ -7,6 +7,7 @@ from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 from web_crawler.crawler_processes.spiders.LinksSpider import LinksSpider
+from web_crawler.crawler_processes.spiders.googleShoppingSpider import googleShoppingSpider
 
 # Configure Logging & Import Project Settings
 settings = get_project_settings()
@@ -33,7 +34,8 @@ async def scrape_endpoint(searchQuery: str = Query(..., description="Product sea
     configure_logging()
     runner = CrawlerRunner(settings)
 
-    spider = LinksSpider
+    # spider = LinksSpider
+    spider = googleShoppingSpider
 
     d = runner.crawl(spider, searchQuery=searchQuery)
 
@@ -43,14 +45,16 @@ async def scrape_endpoint(searchQuery: str = Query(..., description="Product sea
 
     # Start the Twisted reactor
     reactor.run()
-    urls = LinksSpider.result
+    urls = googleShoppingSpider.result
+    print("***********************************************")
+    print(urls)
 
     client = MongoClient('mongodb+srv://admin:pa33word@crawler.0jer4eh.mongodb.net/test')
     db = client['crawler']
     data = db.scrapeResults
 
     results = Product(searchQuery, urls)
-    data.insert_one(results.to_dict())
+    #data.insert_one(results.to_dict())
 
     return JSONResponse(content=results.to_dict())
     # return {"message": "Scraping for {searchQuery} completed"}

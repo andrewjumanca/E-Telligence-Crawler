@@ -1,4 +1,4 @@
-# Scrapy settings for testRun project
+# Scrapy settings for crawler_processes project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,14 +7,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "testRun"
+BOT_NAME = "crawler_processes"
 
-SPIDER_MODULES = ["testRun.spiders"]
-NEWSPIDER_MODULE = "testRun.spiders"
+SPIDER_MODULES = ["crawler_processes.spiders"]
+NEWSPIDER_MODULE = "crawler_processes.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "testRun (+http://www.yourdomain.com)"
+#USER_AGENT = "crawler_processes (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False

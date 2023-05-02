@@ -1,26 +1,30 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from urllib.parse import urlparse, parse_qsl
+from JSONprocess import append_to_json
 
+# Our main shopping spider for Google. 
 class googleShoppingSpider(scrapy.Spider):
     name = "googleShoppingSpider"
-    links = []
 
-    def __init__(self, searchQuery="", *args, **kwargs):
-        super(googleShoppingSpider, self).__init__(*args, **kwargs)
+    def __init__(self, searchQuery='', **kwargs):
+        super().__init__(**kwargs)
         self.searchQuery = searchQuery
-
+        self.product_data = {'product_name': self.searchQuery,
+                    'urls': []}
 
     def start_requests(self):
         url = f'https://www.google.com/search?q={self.searchQuery}&source=lnms&tbm=shop'
         yield scrapy.Request(url=url, callback=self.parse)
     
+
     def parse(self, response):
         found_urls = []
         
-        link_extractor = LinkExtractor(allow=r'url\?q=http')
+        link_extractor = LinkExtractor(allow=(r'url\?q=http'))
     
         for link in link_extractor.extract_links(response):
+
             if not check_word_repetition(link.url, "google.com"):
                 found_urls.append(link.url)
 
@@ -29,9 +33,15 @@ class googleShoppingSpider(scrapy.Spider):
 
     def get_actual_urls(self, response):
         # actual_url = extract_actual_url(response.url)
-        print(response.url)
-        self.links.append(response.url)
+        # print(actual_url)
+        if response.url not in self.product_data['urls']:
+            self.product_data['urls'].append(response.url)
 
+    def closed(self, reason):
+        try:
+            append_to_json(self.product_data)
+        except Exception as e:
+            print(e)    
 
 
 def check_word_repetition(url_string, word):
@@ -44,6 +54,8 @@ def extract_actual_url(google_url):
     query_params = dict(parse_qsl(parsed_url.query))
     actual_url = query_params.get('url', '')
     return actual_url
+
+
 
 # Code to connect to Netprism API
 

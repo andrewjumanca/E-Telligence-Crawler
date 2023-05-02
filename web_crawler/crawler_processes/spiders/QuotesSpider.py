@@ -1,9 +1,6 @@
-from pathlib import Path
 import scrapy
-from scrapy.linkextractors import LinkExtractor
-import json
 
-
+# Template spider designated for testing 
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
 

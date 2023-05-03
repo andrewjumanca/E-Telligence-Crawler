@@ -22,3 +22,4 @@ def append_to_json(data):
 def readFromJSON():
     with open('product_data.json', 'r') as f:
         URLs = json.load(f)
+    return URLs

@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from scrapy.crawler import CrawlerProcess
@@ -6,6 +7,7 @@ from scrapy.utils.log import configure_logging
 from multiprocessing import Process, Queue
 from web_crawler.crawler_processes.spiders.googleShoppingSpider import googleShoppingSpider
 from pymongo import MongoClient
+from JSONprocess import readFromJSON
 import json
 
 # Wrapper class for URL data before sending to MongoDB (offline right now)
@@ -38,6 +40,8 @@ app = FastAPI()
 
 @app.get("/scrape/")
 async def scrape(searchQuery: str = Query(..., description="Product search term")):
+    with open('product_data.json', 'w') as f:
+        f.truncate(0)
     spiders = [googleShoppingSpider]
     queue = Queue()
 
@@ -57,6 +61,5 @@ async def scrape(searchQuery: str = Query(..., description="Product search term"
 
     # results = Product(searchQuery, URLs)
     # data.insert_one(results.to_dict())
-
-    # return JSONResponse(content=results)
-    return {"message": "Scraping completed!"}
+    return JSONResponse(content=readFromJSON())
+    # return {"message": "Scraping completed!"}

@@ -29,7 +29,9 @@ class googleShoppingSpider(scrapy.Spider):
                 found_urls.append(link.url)
 
         print("PARSING ************************************")
+        prefix = "https://www.google.com/url?q="
         for url in found_urls:
+            url = url[len(prefix):] if url.startswith(prefix) else url
             if url not in self.product_data['urls']:
                 self.product_data['urls'].append(url)
 

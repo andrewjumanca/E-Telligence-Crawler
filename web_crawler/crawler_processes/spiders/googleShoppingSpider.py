@@ -28,14 +28,16 @@ class googleShoppingSpider(scrapy.Spider):
             if not check_word_repetition(link.url, "google.com"):
                 found_urls.append(link.url)
 
+        print("PARSING ************************************")
         for url in found_urls:
-            yield scrapy.Request(url=url, callback=self.get_actual_urls)
+            if url not in self.product_data['urls']:
+                self.product_data['urls'].append(url)
 
-    def get_actual_urls(self, response):
-        # actual_url = extract_actual_url(response.url)
-        # print(actual_url)
-        if response.url not in self.product_data['urls']:
-            self.product_data['urls'].append(response.url)
+    # def get_actual_urls(self, response, urls):
+    #     print("CALLBACK ************************************")
+    #     for url in urls:
+    #         if url not in self.product_data['urls']:
+    #             self.product_data['urls'].append(response.url)
 
     def closed(self, reason):
         try:

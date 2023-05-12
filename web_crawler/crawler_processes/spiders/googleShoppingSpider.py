@@ -1,7 +1,8 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
-from urllib.parse import urlparse, parse_qsl
+from urllib.parse import urlparse, parse_qs, unquote
 from JSONprocess import append_to_json
+
 
 # Our main shopping spider for Google. 
 class googleShoppingSpider(scrapy.Spider):
@@ -20,8 +21,11 @@ class googleShoppingSpider(scrapy.Spider):
 
     def parse(self, response):
         found_urls = []
+        print(response)
         
         link_extractor = LinkExtractor(allow=(r'url\?q=http'))
+        # link_extractor = LinkExtractor(allow=(r'url\?url=https'))
+        # link_extractor = LinkExtractor()
     
         for link in link_extractor.extract_links(response):
 
@@ -29,17 +33,11 @@ class googleShoppingSpider(scrapy.Spider):
                 found_urls.append(link.url)
 
         print("PARSING ************************************")
-        prefix = "https://www.google.com/url?q="
         for url in found_urls:
-            url = url[len(prefix):] if url.startswith(prefix) else url
-            if url not in self.product_data['urls']:
-                self.product_data['urls'].append(url)
+            direct_url = extract_direct_url(url)
 
-    # def get_actual_urls(self, response, urls):
-    #     print("CALLBACK ************************************")
-    #     for url in urls:
-    #         if url not in self.product_data['urls']:
-    #             self.product_data['urls'].append(response.url)
+            if direct_url not in self.product_data['urls']:
+                self.product_data['urls'].append(direct_url)
 
     def closed(self, reason):
         try:
@@ -53,11 +51,14 @@ def check_word_repetition(url_string, word):
     word_count = url_string.count(word.lower())
     return word_count > 1
 
-def extract_actual_url(google_url):
-    parsed_url = urlparse(google_url)
-    query_params = dict(parse_qsl(parsed_url.query))
-    actual_url = query_params.get('url', '')
-    return actual_url
+def extract_direct_url(google_url):
+        parsed_url = urlparse(google_url)
+        query_params = parse_qs(parsed_url.query)
+        direct_url = query_params.get('q')
+        if direct_url:
+            direct_url = direct_url[0]
+            direct_url = unquote(direct_url)  # Decode URL
+            return direct_url
 
 
 

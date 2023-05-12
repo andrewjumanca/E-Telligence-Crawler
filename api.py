@@ -1,4 +1,4 @@
-import os
+
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from scrapy.crawler import CrawlerProcess
@@ -10,7 +10,7 @@ from pymongo import MongoClient
 from JSONprocess import readFromJSON
 # from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.cors import CORSMiddleware
-import json
+
 
 # Wrapper class for URL data before sending to MongoDB (offline right now)
 class Product:

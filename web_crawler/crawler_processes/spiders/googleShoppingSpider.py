@@ -2,6 +2,7 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from urllib.parse import urlparse, parse_qs, unquote
 from JSONprocess import append_to_json
+from dom_filteration import get_html_tags
 
 
 # Our main shopping spider for Google. 
@@ -11,8 +12,11 @@ class googleShoppingSpider(scrapy.Spider):
     def __init__(self, searchQuery='', **kwargs):
         super().__init__(**kwargs)
         self.searchQuery = searchQuery
-        self.product_data = {'product_name': self.searchQuery,
-                    'urls': []}
+        self.product_data = {'search_term': self.searchQuery,
+                    'product':[{'url': "",
+                               'title': "",
+                               'image': "",
+                               'price': ""}] }
 
     def start_requests(self):
         url = f'https://www.google.com/search?q={self.searchQuery}&source=lnms&tbm=shop'
@@ -24,20 +28,16 @@ class googleShoppingSpider(scrapy.Spider):
         print(response)
         
         link_extractor = LinkExtractor(allow=(r'url\?q=http'))
-        # link_extractor = LinkExtractor(allow=(r'url\?url=https'))
-        # link_extractor = LinkExtractor()
     
         for link in link_extractor.extract_links(response):
+            print("LINK: ", link.url)
 
             if not check_word_repetition(link.url, "google.com"):
-                found_urls.append(link.url)
+                direct_url = extract_direct_url(link.url)
+                if direct_url not in found_urls:
+                    found_urls.append(direct_url)
 
-        print("PARSING ************************************")
-        for url in found_urls:
-            direct_url = extract_direct_url(url)
-
-            if direct_url not in self.product_data['urls']:
-                self.product_data['urls'].append(direct_url)
+        self.product_data['product'] = get_html_tags(found_urls)
 
     def closed(self, reason):
         try:

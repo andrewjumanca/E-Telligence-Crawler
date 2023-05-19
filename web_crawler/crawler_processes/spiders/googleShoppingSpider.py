@@ -13,10 +13,7 @@ class googleShoppingSpider(scrapy.Spider):
         super().__init__(**kwargs)
         self.searchQuery = searchQuery
         self.product_data = {'search_term': self.searchQuery,
-                    'product':[{'url': "",
-                               'title': "",
-                               'image': "",
-                               'price': ""}] }
+                    'products':[] }
 
     def start_requests(self):
         url = f'https://www.google.com/search?q={self.searchQuery}&source=lnms&tbm=shop'
@@ -37,7 +34,8 @@ class googleShoppingSpider(scrapy.Spider):
                 if direct_url not in found_urls:
                     found_urls.append(direct_url)
 
-        self.product_data['product'] = get_html_tags(found_urls)
+        # self.product_data['product'] = get_html_tags(found_urls)
+        self.product_data['products'] = found_urls
 
     def closed(self, reason):
         try:

@@ -7,4 +7,4 @@ Our API and algorithm works by beginning multiple web crawls from a conglomerate
 
 The end goal of our API would be to deliver clean, product-related data in order to supply information for a product recommendation system, general e-commerce insights, or even price tracking data for other applications NetPrism would pursue.
 
-This code based was developed by Ahmed Ghaddah, Matthew Ramirez, Andrew Jumanca, Christopher Ku, and Ryan Carroll.
+This repository was developed by Ahmed Ghaddah, Matthew Ramirez, Andrew Jumanca, Christopher Ku, and Ryan Carroll.
